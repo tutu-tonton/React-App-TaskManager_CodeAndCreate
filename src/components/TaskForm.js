@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { TaskListContext } from '../context/TaskListContext';
 
 const TaskForm = () => {
-	const { addTask, clearList } = useContext(TaskListContext);
+	const { addTask, clearList, editItem, editTask } = useContext(TaskListContext);
 
 	const [title, setTitle] = useState('');
 
@@ -14,9 +14,27 @@ const TaskForm = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		addTask(title);
-		setTitle('');
+		// 新規追加の場合
+		if (!editItem) {
+			addTask(title);
+			setTitle('');
+		} else {
+			// 編集ボタンクリックした後、新タイトル入力した場合
+			// 旧タイトルを上書きするように、
+			editTask(title, editItem.id);
+		}
 	};
+
+	useEffect(() => {
+		if (editItem) {
+			// titleに編集タイトルがセットされる
+			// inputのvalueがtitleだから、input欄には編集タイトルが表示される
+			setTitle(editItem.title);
+			console.log(editItem);
+		} else {
+			setTitle('');
+		}
+	}, [editItem]);
 
 	return (
 		<form onSubmit={handleSubmit} className="form">
@@ -30,7 +48,8 @@ const TaskForm = () => {
 			/>
 			<div className="buttons">
 				<button type="submit" className="btn add-task-btn">
-					Add Task
+					{/* 編集中なのか、新規追加なのかでボタン表示変える */}
+					{editItem ? 'Edit Task' : 'Add Task'}
 				</button>
 				<button onClick={clearList} className="btn clear-btn">
 					All Clear

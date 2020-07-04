@@ -3,6 +3,8 @@
 :arrow_forward: [React App with Context API and React Hooks / Build a Task Manager using React / Context API / Hooks
 ](https://www.youtube.com/watch?v=fqup-BL3VjI)
 
+![](Jul-04-2020 20-59-38.gif)
+
 ## 作成手順
 
 0. fontawesome読み込み
@@ -34,4 +36,15 @@
 
 --- Edit Button ---
 
-10. 
+10. id特定 -> 
+    1.  Context: idを特定する関数作成。localState-editItem作成。
+    2.  ボタンクリックすると、そのidがeditItemに格納される
+11. 編集内容で新配列作る
+    1.  Context: newTasks作る - 編集アイテムは新タイトルに変更して、その他はそのままで新配列を作る
+    2.  TaskForm.js: useEffect-編集アイテムでsetTitle
+    3.  編集アイテムのidに対して、タイトルを上書きするように
+
+--- localStorageに保存 ---
+
+12. local-set-json-stringify
+13. json-parse-local-get
